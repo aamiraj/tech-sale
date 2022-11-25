@@ -3,7 +3,7 @@ import { FaCheck } from "react-icons/fa";
 import formatDate from "../utilities/formatDate";
 import formatPrice from "../utilities/formatPrice";
 
-function LaptopCard({ laptop }) {
+function LaptopCard({ laptop, setTitle }) {
   const {
     img,
     product,
@@ -14,7 +14,11 @@ function LaptopCard({ laptop }) {
     yearsOfUse,
     postedTime,
     verifiedUser,
+    brand
   } = laptop;
+
+  const handleSetTitle = ()=>{setTitle(brand + " Laptops")}
+  handleSetTitle()
 
   return (
     <div>

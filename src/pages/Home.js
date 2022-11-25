@@ -8,10 +8,12 @@ import { Link } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import Delivery from "../assets/delivery.jpg";
 import About from "../assets/aboutus.png";
+import useTitle from "../hooks/useTitle";
 
 function Home() {
   const [categories] = useFetch("http://localhost:5000/categories");
   //console.log(categories);
+  useTitle("Tech Sale || A store for used laptops")
 
   return (
     <>

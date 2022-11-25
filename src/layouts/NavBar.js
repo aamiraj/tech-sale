@@ -37,7 +37,7 @@ function NavBar() {
             </li>
           </ul>
         </div>
-        <Link><img className="p-2 lg:w-1/2" src={Logo} alt="logo"></img></Link>
+        <Link to='/'><img className="p-2 lg:w-1/2" src={Logo} alt="logo"></img></Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">
@@ -64,7 +64,7 @@ function NavBar() {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link className="btn">Get started</Link>
+        <Link to="/login" className="btn btn-primary">Log In</Link>
       </div>
     </div>
   );
