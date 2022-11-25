@@ -10,7 +10,7 @@ import Loading from "../comps/Loading";
 import toast, { Toaster } from "react-hot-toast";
 
 const LogIn = () => {
-  const { user, logIn, googleLogIn, gitHubLogIn, isLoading, setLoading } =
+  const { user, logIn, googleLogIn, gitHubLogIn, isLoading, setLoading, setRole } =
     useContext(AuthContext);
   const [error, setError] = useState("");
 
@@ -22,9 +22,9 @@ const LogIn = () => {
 
   const notify = (user, error) => {
     if (user) {
-      return toast.success("User Registration Successful.");
+      return toast.success("User Log In Successful.");
     } else {
-      return toast.error("User Registration Failed. " + error.message);
+      return toast.error("User Log In Failed. " + error.message);
     }
   };
 
@@ -34,40 +34,43 @@ const LogIn = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    // console.log(email, password);
-    logIn(email, password)
+    const userRole = form.role.value
+    //console.log(email, password, role);
+
+     logIn(email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        notify(user, null);
-        // const currentUser = {
-        //   email: user.email,
-        // };
+         //const user = userCredential.user;
+         setRole(userRole)
+
+         // const currentUser = {
+         //   email: user.email,
+         // };
 
         // get jwt token
-        // fetch("https://shipy-server-app.vercel.app/jwt", {
-        //   method: "POST",
-        //   headers: {
-        //     "content-type": "application/json",
-        //   },
-        //   body: JSON.stringify(currentUser),
-        // })
+         // fetch("https://shipy-server-app.vercel.app/jwt", {
+         //   method: "POST",
+       //   headers: {
+         //     "content-type": "application/json",
+         //   },
+         //   body: JSON.stringify(currentUser),
+         // })
         //   .then((res) => {
-        //     setLoading(false);
-        //     return res.json();
-        //   })
-        //   .then((data) => {
-        //     //console.log(data);
-        //     // saved to local storage
-        //     localStorage.setItem("access-token", data.token);
-        //     //navigate(from, { replace: true });
-        //   });
-        // // navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        notify(null, error);
-        setError(errorMessage);
-      });
+         //     setLoading(false);
+         //     return res.json();
+         //   })
+         //   .then((data) => {
+         //     //console.log(data);
+         //     // saved to local storage
+         //     localStorage.setItem("access-token", data.token);
+         //     //navigate(from, { replace: true });
+         //   });
+         // // navigate(from, { replace: true });
+       })
+       .catch((error) => {
+         const errorMessage = error.message;
+         notify(null, error);
+         setError(errorMessage);
+       });
   };
 
   const handleGoogleLogIn = () => {
@@ -78,9 +81,7 @@ const LogIn = () => {
         // const currentUser = {
         //   email: user.email,
         // };
-
         //console.log(currentUser);
-
         // get jwt token
         // fetch("https://shipy-server-app.vercel.app/jwt", {
         //   method: "POST",
@@ -115,7 +116,6 @@ const LogIn = () => {
         // const currentUser = {
         //   email: user.email,
         // };
-
         // get jwt token
         // fetch("https://shipy-server-app.vercel.app/jwt", {
         //   method: "POST",
@@ -153,7 +153,7 @@ const LogIn = () => {
 
   return (
     <div className="w-11/12 h-auto md:w-1/2 mx-auto border rounded-md shadow-lg hover:shadow-2xl p-5 my-8">
-        <Toaster position="top-center" reverseOrder={false}></Toaster>
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
       {isLoading && <Loading></Loading>}
       <h1 className="text-4xl font-bold text-center my-8">Log In</h1>
       <p>
@@ -181,6 +181,29 @@ const LogIn = () => {
           className="input input-bordered"
           required
         />
+        
+          <label className="label cursor-pointer">
+            <span className="label-text">Buyer</span>
+            <input
+              type="radio"
+              name="role"
+              className="radio checked:bg-red-500"
+              value="buyer"
+              defaultChecked
+            />
+          </label>
+        
+        
+          <label className="label cursor-pointer">
+            <span className="label-text">Seller</span>
+            <input
+              type="radio"
+              name="role"
+              className="radio checked:bg-blue-500"
+              value="seller"
+            />
+          </label>
+        
         {error && <p className="text-error">{error}</p>}
         <button type="submit" className="btn btn-outline btn-info my-4">
           Log In

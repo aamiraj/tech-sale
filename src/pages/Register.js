@@ -4,9 +4,10 @@ import { AuthContext } from "../contexts/UserContext";
 import useTitle from "../hooks/useTitle";
 import Loading from "../comps/Loading";
 import toast, { Toaster } from "react-hot-toast";
+import { updateProfile } from "firebase/auth";
 
 const Register = () => {
-  const { register, isLoading, setLoading } = useContext(AuthContext);
+  const { register, isLoading } = useContext(AuthContext);
   useTitle("Register");
 
   const notify = (user, error) => {
@@ -21,17 +22,22 @@ const Register = () => {
     //setLoading(true);
     event.preventDefault();
     const form = event.target;
+    const name = form.fullName.value;
     const email = form.email.value;
     const password = form.password.value;
+   
+
     // console.log(email, password);
     register(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        notify(user, null);
+        updateProfile(user, { displayName: name }).then().catch();
 
         // const currentUser = {
         //   email: user.email,
         // };
+
+        
 
         // // get jwt token
         // fetch("https://shipy-server-app.vercel.app/jwt", {
@@ -95,6 +101,9 @@ const Register = () => {
           className="input input-bordered"
           required
         />
+
+        
+
         {/* <label htmlFor="photoURL" className="input-group my-4">
           Photo URL
         </label>

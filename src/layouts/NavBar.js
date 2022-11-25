@@ -1,12 +1,12 @@
 import React, {useContext } from "react";
-import { FaBars, FaAngleDown, FaAngleRight } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { Link, NavLink,  useNavigate  } from "react-router-dom";
 import Logo from '../assets/logo.png'
 import { AuthContext } from "../contexts/UserContext";
 import { FaUserAlt } from "react-icons/fa";
 
 function NavBar() {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut, role } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogOut = () => {
@@ -41,18 +41,14 @@ function NavBar() {
               </NavLink>
             </li>
             <li tabIndex={0}>
-              <Link className="justify-between">
-                Parent
-                <FaAngleRight></FaAngleRight>
-              </Link>
-              <ul className="p-2">
-                <li>
-                  <Link>Submenu 1</Link>
-                </li>
-                <li>
-                  <Link>Submenu 2</Link>
-                </li>
-              </ul>
+            {role && <NavLink
+                className={({ isActive }) =>
+                  isActive ? "text-amber-500" : undefined
+                }
+                to="/dashboard"
+              >
+                Dashboard
+              </NavLink>}
             </li>
             <li>
               <Link>Item 3</Link>
@@ -67,18 +63,14 @@ function NavBar() {
             <Link to="/home">Home</Link>
           </li>
           <li tabIndex={0}>
-            <Link>
-              Parent
-              <FaAngleDown></FaAngleDown>
-            </Link>
-            <ul className="p-2">
-              <li>
-                <Link>Submenu 1</Link>
-              </li>
-              <li>
-                <Link>Submenu 2</Link>
-              </li>
-            </ul>
+          {role && <NavLink
+                className={({ isActive }) =>
+                  isActive ? "text-amber-500" : undefined
+                }
+                to="/dashboard"
+              >
+                Dashboard
+              </NavLink>}
           </li>
           <li>
             <Link>Item 3</Link>

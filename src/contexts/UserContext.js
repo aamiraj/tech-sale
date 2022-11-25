@@ -19,6 +19,7 @@ const gitHubProvider = new GithubAuthProvider();
 const UserContext = ({ children }) => {
   const [user, setUser] = useState();
   const [isLoading, setLoading] = useState(false);
+  const [role, setRole] = useState("")
 
   const register = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -61,6 +62,8 @@ const UserContext = ({ children }) => {
         logOut,
         isLoading,
         setLoading,
+        role,
+        setRole
       }}
     >
       {children}
