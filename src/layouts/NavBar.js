@@ -1,9 +1,24 @@
-import React from "react";
+import React, {useContext } from "react";
 import { FaBars, FaAngleDown, FaAngleRight } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, NavLink,  useNavigate  } from "react-router-dom";
 import Logo from '../assets/logo.png'
+import { AuthContext } from "../contexts/UserContext";
+import { FaUserAlt } from "react-icons/fa";
 
 function NavBar() {
+  const { user, logOut } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        navigate("/home");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <div className="navbar bg-accent shadow-2xl">
       <div className="navbar-start">
@@ -16,7 +31,14 @@ function NavBar() {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link to="/home">Home</Link>
+            <NavLink
+                className={({ isActive }) =>
+                  isActive ? "text-amber-500" : undefined
+                }
+                to="/home"
+              >
+                Home
+              </NavLink>
             </li>
             <li tabIndex={0}>
               <Link className="justify-between">
@@ -64,7 +86,28 @@ function NavBar() {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to="/login" className="btn btn-primary">Log In</Link>
+      {user?.uid ? (
+          <div
+            className="flex justify-center items-center tooltip tooltip-left"
+            data-tip={user?.email}
+          >
+            {user?.photoURL ? (
+              <img
+                className="w-8 h-8 rounded-full mx-4"
+                src={user?.photoURL}
+                alt="profile-pic"
+              />
+            ) : (
+              <FaUserAlt className="w-8 h-8 rounded-full mx-4" />
+            )}
+            <button onClick={handleLogOut} className="btn btn-outline">
+              Log Out
+            </button>
+          </div>
+        ) : (
+          <Link to="/login" className="btn btn-primary">Log In</Link>
+        )}
+        
       </div>
     </div>
   );

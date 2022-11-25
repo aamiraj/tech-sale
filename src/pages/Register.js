@@ -3,10 +3,19 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/UserContext";
 import useTitle from "../hooks/useTitle";
 import Loading from "../comps/Loading";
+import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
   const { register, isLoading, setLoading } = useContext(AuthContext);
   useTitle("Register");
+
+  const notify = (user, error) => {
+    if (user) {
+      return toast.success("User Registration Successful.");
+    } else {
+      return toast.error("User Registration Failed. " + error.message);
+    }
+  };
 
   const handleRegister = (event) => {
     //setLoading(true);
@@ -17,7 +26,8 @@ const Register = () => {
     // console.log(email, password);
     register(email, password)
       .then((userCredential) => {
-        // const user = userCredential.user;
+        const user = userCredential.user;
+        notify(user, null);
 
         // const currentUser = {
         //   email: user.email,
@@ -45,18 +55,15 @@ const Register = () => {
         // setLoading(false);
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorCode, errorMessage);
+        notify(null, error);
       });
     form.reset();
   };
 
   return (
     <div className="w-3/4 md:w-1/2 mx-auto border rounded-md shadow-lg hover:shadow-2xl p-5 my-8">
-      {isLoading && (
-        <Loading/>
-      )}
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
+      {isLoading && <Loading />}
       <h1 className="text-4xl font-bold text-center my-8">Register Here</h1>
       <p>
         Already Registered?{" "}

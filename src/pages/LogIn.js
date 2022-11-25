@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useTitle from "../hooks/useTitle";
 import Loading from "../comps/Loading";
+import toast, { Toaster } from "react-hot-toast";
 
 const LogIn = () => {
   const { user, logIn, googleLogIn, gitHubLogIn, isLoading, setLoading } =
@@ -19,6 +20,14 @@ const LogIn = () => {
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
 
+  const notify = (user, error) => {
+    if (user) {
+      return toast.success("User Registration Successful.");
+    } else {
+      return toast.error("User Registration Failed. " + error.message);
+    }
+  };
+
   const handleLogIn = (event) => {
     //setLoading(true);
     event.preventDefault();
@@ -28,7 +37,8 @@ const LogIn = () => {
     // console.log(email, password);
     logIn(email, password)
       .then((userCredential) => {
-        //const user = userCredential.user;
+        const user = userCredential.user;
+        notify(user, null);
         // const currentUser = {
         //   email: user.email,
         // };
@@ -55,6 +65,7 @@ const LogIn = () => {
       })
       .catch((error) => {
         const errorMessage = error.message;
+        notify(null, error);
         setError(errorMessage);
       });
   };
@@ -142,6 +153,7 @@ const LogIn = () => {
 
   return (
     <div className="w-11/12 h-auto md:w-1/2 mx-auto border rounded-md shadow-lg hover:shadow-2xl p-5 my-8">
+        <Toaster position="top-center" reverseOrder={false}></Toaster>
       {isLoading && <Loading></Loading>}
       <h1 className="text-4xl font-bold text-center my-8">Log In</h1>
       <p>
