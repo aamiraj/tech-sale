@@ -4,10 +4,9 @@ import { AuthContext } from "../contexts/UserContext";
 import useTitle from "../hooks/useTitle";
 import Loading from "../comps/Loading";
 import toast, { Toaster } from "react-hot-toast";
-import { updateProfile } from "firebase/auth";
 
 const Register = () => {
-  const { register, isLoading } = useContext(AuthContext);
+  const { register, isLoading, updateName } = useContext(AuthContext);
   useTitle("Register");
 
   const notify = (user, error) => {
@@ -31,7 +30,9 @@ const Register = () => {
     register(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        updateProfile(user, { displayName: name }).then().catch();
+        updateName(name)
+        .then(()=>notify(user, null))
+        .catch((error)=>notify(null, error));
 
         // const currentUser = {
         //   email: user.email,

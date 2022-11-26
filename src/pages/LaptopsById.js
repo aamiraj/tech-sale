@@ -12,7 +12,7 @@ function LaptopsById() {
     <section className="my-8 mx-auto w-full md:w-3/4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {laptops.map((laptop, i) => (
-          <LaptopCard key={i} laptop={laptop} setTitle={setTitle}></LaptopCard>
+          <LaptopCard key={i} laptop={laptop} setTitle={(laptop)=>setTitle(laptop.brand)}></LaptopCard>
         ))}
       </div>
     </section>

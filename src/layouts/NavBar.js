@@ -60,7 +60,14 @@ function NavBar() {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">
           <li>
-            <Link to="/home">Home</Link>
+          <NavLink
+                className={({ isActive }) =>
+                  isActive ? "text-amber-500" : undefined
+                }
+                to="/home"
+              >
+                Home
+              </NavLink>
           </li>
           <li tabIndex={0}>
           {role && <NavLink

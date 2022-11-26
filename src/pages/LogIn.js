@@ -77,6 +77,7 @@ const LogIn = () => {
     setLoading(true);
     googleLogIn()
       .then((userCredential) => {
+        setRole("buyer")
         // const user = userCredential.user;
         // const currentUser = {
         //   email: user.email,
@@ -112,6 +113,7 @@ const LogIn = () => {
     setLoading(true);
     gitHubLogIn()
       .then((userCredential) => {
+        setRole("buyer")
         // const user = userCredential.user;
         // const currentUser = {
         //   email: user.email,
