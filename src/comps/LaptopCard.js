@@ -3,6 +3,7 @@ import { FaCheck } from "react-icons/fa";
 import formatDate from "../utilities/formatDate";
 import formatPrice from "../utilities/formatPrice";
 import { AuthContext } from "../contexts/UserContext";
+import toast, { Toaster } from "react-hot-toast";
 
 function LaptopCard({ laptop }) {
   const { user } = useContext(AuthContext);
@@ -20,13 +21,20 @@ function LaptopCard({ laptop }) {
     verifiedUser,
   } = laptop;
 
+  const bookedNotify = (response) => {
+    if (response) {
+      return toast.success("Booking Successful.");
+    } else {
+      return toast.error("Booking Failed.");
+    }
+  };
+
   const handleSubmit = (e) => {
-    console.log(user);
     e.preventDefault();
     const form = e.target;
 
     const buyerInfo = {
-      name: user?.displayName,
+      name: user?.displayName || "",
       email: user.email,
       product: product,
       price: resalePrice,
@@ -41,6 +49,8 @@ function LaptopCard({ laptop }) {
 
   return (
     <div>
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
+
       {/* main section here  */}
       <div className="card w-96 bg-base-100 shadow-xl h-full">
         <figure>

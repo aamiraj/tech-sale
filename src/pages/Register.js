@@ -6,7 +6,7 @@ import Loading from "../comps/Loading";
 import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
-  const { register, isLoading, updateName } = useContext(AuthContext);
+  const { register, isLoading, updateName, setRole } = useContext(AuthContext);
   useTitle("Register");
 
   const notify = (user, error) => {
@@ -24,21 +24,39 @@ const Register = () => {
     const name = form.fullName.value;
     const email = form.email.value;
     const password = form.password.value;
-   
+    const userRole = form.role.value;
 
     // console.log(email, password);
     register(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         updateName(name)
-        .then(()=>notify(user, null))
-        .catch((error)=>notify(null, error));
+          .then(() => {})
+          .catch((error) => notify(null, error));
 
-        // const currentUser = {
-        //   email: user.email,
-        // };
+        const currentUser = {
+          name: name,
+          email: user.email,
+          role: userRole,
+        };
 
-        
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(currentUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.acknowledged) {
+              notify(user, null);
+              setRole(userRole)
+            }
+          })
+          .catch((error) => {
+            notify(null, error);
+          });
 
         // // get jwt token
         // fetch("https://shipy-server-app.vercel.app/jwt", {
@@ -102,13 +120,27 @@ const Register = () => {
           className="input input-bordered"
           required
         />
-
-        
-
-        {/* <label htmlFor="photoURL" className="input-group my-4">
-          Photo URL
+        <label className="label cursor-pointer">
+          <span className="label-text">Buyer</span>
+          <input
+            type="radio"
+            name="role"
+            className="radio checked:bg-red-500"
+            value="buyer"
+            defaultChecked
+          />
         </label>
-        <input name="photoURL" type="text" className="input input-bordered" /> */}
+
+        <label className="label cursor-pointer">
+          <span className="label-text">Seller</span>
+          <input
+            type="radio"
+            name="role"
+            className="radio checked:bg-blue-500"
+            value="seller"
+          />
+        </label>
+
         <button type="submit" className="btn btn-outline btn-info my-4">
           Register
         </button>

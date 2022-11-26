@@ -10,8 +10,16 @@ import Loading from "../comps/Loading";
 import toast, { Toaster } from "react-hot-toast";
 
 const LogIn = () => {
-  const { user, logIn, googleLogIn, gitHubLogIn, isLoading, setLoading, setRole } =
-    useContext(AuthContext);
+  const {
+    user,
+    logIn,
+    logOut,
+    googleLogIn,
+    gitHubLogIn,
+    isLoading,
+    setLoading,
+    setRole,
+  } = useContext(AuthContext);
   const [error, setError] = useState("");
 
   useTitle("Log In");
@@ -34,54 +42,90 @@ const LogIn = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    const userRole = form.role.value
+    const userRole = form.role.value;
     //console.log(email, password, role);
 
-     logIn(email, password)
+    logIn(email, password)
       .then((userCredential) => {
-         //const user = userCredential.user;
-         setRole(userRole)
+        const user = userCredential.user;
+        fetch(`http://localhost:5000/users?email=${email}&role=${userRole}`)
+          .then((res) => res.json())
+          .then(() => {
+            notify(user, null);
+            setRole(userRole);
+          })
+          .catch((error) => {
+            if (error) {
+              logOut()
+                .then()
+                .then()
+                .catch((error) => console.error(error.message));
+              return toast.error(
+                "User can not be found in database. Please register and try again."
+              );
+            }
+          });
 
-         // const currentUser = {
-         //   email: user.email,
-         // };
+        // const currentUser = {
+        //   email: user.email,
+        // };
 
         // get jwt token
-         // fetch("https://shipy-server-app.vercel.app/jwt", {
-         //   method: "POST",
-       //   headers: {
-         //     "content-type": "application/json",
-         //   },
-         //   body: JSON.stringify(currentUser),
-         // })
+        // fetch("https://shipy-server-app.vercel.app/jwt", {
+        //   method: "POST",
+        //   headers: {
+        //     "content-type": "application/json",
+        //   },
+        //   body: JSON.stringify(currentUser),
+        // })
         //   .then((res) => {
-         //     setLoading(false);
-         //     return res.json();
-         //   })
-         //   .then((data) => {
-         //     //console.log(data);
-         //     // saved to local storage
-         //     localStorage.setItem("access-token", data.token);
-         //     //navigate(from, { replace: true });
-         //   });
-         // // navigate(from, { replace: true });
-       })
-       .catch((error) => {
-         const errorMessage = error.message;
-         notify(null, error);
-         setError(errorMessage);
-       });
+        //     setLoading(false);
+        //     return res.json();
+        //   })
+        //   .then((data) => {
+        //     //console.log(data);
+        //     // saved to local storage
+        //     localStorage.setItem("access-token", data.token);
+        //     //navigate(from, { replace: true });
+        //   });
+        // // navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        notify(null, error);
+        setError(errorMessage);
+      });
   };
 
   const handleGoogleLogIn = () => {
     setLoading(true);
     googleLogIn()
       .then((userCredential) => {
-        setRole("buyer")
-        // const user = userCredential.user;
-        // const currentUser = {
-        //   email: user.email,
-        // };
+        const user = userCredential.user;
+        const currentUser = {
+          name: user?.displayName || undefined,
+          email: user.email,
+          role: "buyer",
+        };
+
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(currentUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.acknowledged) {
+              notify(user, null);
+              setRole("buyer");
+            }
+          })
+          .catch((error) => {
+            notify(null, error);
+          });
+
         //console.log(currentUser);
         // get jwt token
         // fetch("https://shipy-server-app.vercel.app/jwt", {
@@ -113,11 +157,31 @@ const LogIn = () => {
     setLoading(true);
     gitHubLogIn()
       .then((userCredential) => {
-        setRole("buyer")
-        // const user = userCredential.user;
-        // const currentUser = {
-        //   email: user.email,
-        // };
+        const user = userCredential.user;
+        const currentUser = {
+          name: user?.displayName || undefined,
+          email: user.email,
+          role: "buyer",
+        };
+
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(currentUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.acknowledged) {
+              notify(user, null);
+              setRole("buyer");
+            }
+          })
+          .catch((error) => {
+            notify(null, error);
+          });
+
         // get jwt token
         // fetch("https://shipy-server-app.vercel.app/jwt", {
         //   method: "POST",
@@ -183,34 +247,37 @@ const LogIn = () => {
           className="input input-bordered"
           required
         />
-        
-          <label className="label cursor-pointer">
-            <span className="label-text">Buyer</span>
-            <input
-              type="radio"
-              name="role"
-              className="radio checked:bg-red-500"
-              value="buyer"
-              defaultChecked
-            />
-          </label>
-        
-        
-          <label className="label cursor-pointer">
-            <span className="label-text">Seller</span>
-            <input
-              type="radio"
-              name="role"
-              className="radio checked:bg-blue-500"
-              value="seller"
-            />
-          </label>
-        
+
+        <label className="label cursor-pointer">
+          <span className="label-text">Buyer</span>
+          <input
+            type="radio"
+            name="role"
+            className="radio checked:bg-red-500"
+            value="buyer"
+            defaultChecked
+          />
+        </label>
+
+        <label className="label cursor-pointer">
+          <span className="label-text">Seller</span>
+          <input
+            type="radio"
+            name="role"
+            className="radio checked:bg-blue-500"
+            value="seller"
+          />
+        </label>
+
         {error && <p className="text-error">{error}</p>}
         <button type="submit" className="btn btn-outline btn-info my-4">
           Log In
         </button>
       </form>
+      <p className="text-center text-info font-bold">
+        <span className="text-warning">Important!</span> Users logged in by
+        using Google or Git Hub will be considered as buyers.
+      </p>
       <div className="flex flex-col md:flex-row justify-between items-center">
         <button
           onClick={handleGoogleLogIn}
