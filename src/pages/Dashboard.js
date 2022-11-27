@@ -10,8 +10,18 @@ function Dashboard() {
   }
   if (role === "seller") {
     return (
-      <div className="w-3/4 mx-auto my-4">
+      <div className="w-11/12 mx-auto my-4">
         <ul className="flex justify-center items-center gap-2 text-warning my-8">
+          <li className="hover:text-primary">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-primary" : undefined
+              }
+              to="/dashboard/myproducts"
+            >
+              My products
+            </NavLink>
+          </li>
           <li className="hover:text-primary">
             <NavLink
               className={({ isActive }) =>
@@ -22,8 +32,16 @@ function Dashboard() {
               Add a product
             </NavLink>
           </li>
-          <li>My products</li>
-          <li>My buyers</li>
+          <li className="hover:text-primary">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-primary" : undefined
+              }
+              to="/dashboard/mybuyers"
+            >
+              My buyers
+            </NavLink>
+          </li>
         </ul>
         <Outlet></Outlet>
       </div>

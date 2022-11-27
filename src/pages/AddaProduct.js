@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/UserContext";
 
 function AddaProduct() {
   const { user, userVerified } = useContext(AuthContext);
+  const navigate = useNavigate()
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -37,6 +39,7 @@ function AddaProduct() {
       .then((data) => {
         if (data.acknowledged) {
           toast.success("Product added successful.");
+          navigate("/dashboard/myproducts")
         }
       })
       .catch((error) => {
@@ -51,7 +54,7 @@ function AddaProduct() {
       <h1 className="text-4xl font-bold text-center my-8">
         Want to add a product to sell!
       </h1>
-      <form onSubmit={handleSubmit} className="form-control">
+      <form onSubmit={handleSubmit} className="form-control w-3/4 mx-auto">
         <label htmlFor="product" className="input-group my-4">
           Product Name
         </label>

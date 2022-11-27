@@ -5,6 +5,8 @@ import Dashboard from "../pages/Dashboard";
 import Home from "../pages/Home";
 import LaptopsById from "../pages/LaptopsById";
 import LogIn from "../pages/LogIn";
+import MyBuyers from "../pages/MyBuyers";
+import MyProducts from "../pages/MyProducts";
 import Register from "../pages/Register";
 import Private from "./PrivateRoute";
 
@@ -34,8 +36,20 @@ export const router = createBrowserRouter([
         element: <Dashboard></Dashboard>,
         children: [
           {
+            path: "/dashboard",
+            element: <MyProducts></MyProducts>,
+          },
+          {
+            path: "/dashboard/myproducts",
+            element: <MyProducts></MyProducts>,
+          },
+          {
             path: "/dashboard/addaproduct",
             element: <AddaProduct></AddaProduct>,
+          },
+          {
+            path: "/dashboard/mybuyers",
+            element: <MyBuyers></MyBuyers>,
           },
         ],
       },
