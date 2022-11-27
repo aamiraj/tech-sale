@@ -1,7 +1,7 @@
-import React, {useContext } from "react";
+import React, { useContext } from "react";
 import { FaBars } from "react-icons/fa";
-import { Link, NavLink,  useNavigate  } from "react-router-dom";
-import Logo from '../assets/logo.png'
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import Logo from "../assets/logo.png";
 import { AuthContext } from "../contexts/UserContext";
 import { FaUserAlt } from "react-icons/fa";
 
@@ -31,7 +31,7 @@ function NavBar() {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-            <NavLink
+              <NavLink
                 className={({ isActive }) =>
                   isActive ? "text-amber-500" : undefined
                 }
@@ -41,51 +41,71 @@ function NavBar() {
               </NavLink>
             </li>
             <li tabIndex={0}>
-            {user && <NavLink
+              {user && (
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "text-amber-500" : undefined
+                  }
+                  to="/dashboard"
+                >
+                  Dashboard
+                </NavLink>
+              )}
+            </li>
+            <li>
+              <NavLink
                 className={({ isActive }) =>
                   isActive ? "text-amber-500" : undefined
                 }
-                to="/dashboard"
+                to="/blog"
               >
-                Dashboard
-              </NavLink>}
-            </li>
-            <li>
-              <Link>Item 3</Link>
+                Blog
+              </NavLink>
             </li>
           </ul>
         </div>
-        <Link to='/'><img className="p-2 lg:w-1/2" src={Logo} alt="logo"></img></Link>
+        <Link to="/">
+          <img className="p-2 lg:w-1/2" src={Logo} alt="logo"></img>
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">
           <li>
-          <NavLink
-                className={({ isActive }) =>
-                  isActive ? "text-amber-500" : undefined
-                }
-                to="/home"
-              >
-                Home
-              </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-amber-500" : undefined
+              }
+              to="/home"
+            >
+              Home
+            </NavLink>
           </li>
           <li tabIndex={0}>
-          {user && <NavLink
+            {user && (
+              <NavLink
                 className={({ isActive }) =>
                   isActive ? "text-amber-500" : undefined
                 }
                 to="/dashboard"
               >
                 Dashboard
-              </NavLink>}
+              </NavLink>
+            )}
           </li>
           <li>
-            <Link>Item 3</Link>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-amber-500" : undefined
+              }
+              to="/blog"
+            >
+              Blog
+            </NavLink>
           </li>
         </ul>
       </div>
       <div className="navbar-end">
-      {user?.uid ? (
+        {user?.uid ? (
           <div
             className="flex justify-center items-center tooltip tooltip-left"
             data-tip={user?.email}
@@ -104,9 +124,10 @@ function NavBar() {
             </button>
           </div>
         ) : (
-          <Link to="/login" className="btn btn-primary">Log In</Link>
+          <Link to="/login" className="btn btn-primary">
+            Log In
+          </Link>
         )}
-        
       </div>
     </div>
   );
