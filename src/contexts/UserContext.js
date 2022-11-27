@@ -21,6 +21,7 @@ const UserContext = ({ children }) => {
   const [user, setUser] = useState();
   const [isLoading, setLoading] = useState(true);
   const [role, setRole] = useState("");
+  const [userVerified, setUserVerified] = useState(false)
 
   const register = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -55,6 +56,7 @@ const UserContext = ({ children }) => {
         .then((res) => res.json())
         .then((data) => {    
           setRole(data.role);
+          setUserVerified(data.verified)
         })
       }
       setUser(currentUser);
@@ -78,6 +80,8 @@ const UserContext = ({ children }) => {
         setLoading,
         role,
         setRole,
+        userVerified,
+        setUserVerified
       }}
     >
       {children}

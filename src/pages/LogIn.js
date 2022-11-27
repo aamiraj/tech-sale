@@ -19,6 +19,7 @@ const LogIn = () => {
     isLoading,
     setLoading,
     setRole,
+    setUserVerified
   } = useContext(AuthContext);
   const [error, setError] = useState("");
 
@@ -53,6 +54,7 @@ const LogIn = () => {
             //console.log(data)
             notify(user, null);
             setRole(data.role);
+            setUserVerified(data.verified)
           })
           .catch((error) => {
             if (error) {

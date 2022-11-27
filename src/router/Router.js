@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layouts/Main";
+import AddaProduct from "../pages/AddaProduct";
 import Dashboard from "../pages/Dashboard";
 import Home from "../pages/Home";
 import LaptopsById from "../pages/LaptopsById";
@@ -21,22 +22,33 @@ export const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: '/login',
-        element:<LogIn></LogIn>
+        path: "/login",
+        element: <LogIn></LogIn>,
       },
       {
-        path: '/register',
-        element:<Register></Register>
+        path: "/register",
+        element: <Register></Register>,
       },
       {
-        path: '/dashboard',
-        element:<Dashboard></Dashboard>
+        path: "/dashboard",
+        element: <Dashboard></Dashboard>,
+        children: [
+          {
+            path: "/dashboard/addaproduct",
+            element: <AddaProduct></AddaProduct>,
+          },
+        ],
       },
       {
         path: "/categories/:id",
-        element: <Private><LaptopsById></LaptopsById></Private>,
-        loader: ({params})=>fetch(`http://localhost:5000/categories/${params.id}`)
-      }
+        element: (
+          <Private>
+            <LaptopsById></LaptopsById>
+          </Private>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/categories/${params.id}`),
+      },
     ],
   },
 ]);
