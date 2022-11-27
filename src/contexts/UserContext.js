@@ -20,7 +20,7 @@ const gitHubProvider = new GithubAuthProvider();
 const UserContext = ({ children }) => {
   const [user, setUser] = useState();
   const [isLoading, setLoading] = useState(true);
-  const [role, setRole] = useState("")
+  const [role, setRole] = useState("");
 
   const register = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -30,9 +30,9 @@ const UserContext = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const updateName = (name)=>{
-    return updateProfile(auth.currentUser, {displayName: name})
-  }
+  const updateName = (name) => {
+    return updateProfile(auth.currentUser, { displayName: name });
+  };
 
   const googleLogIn = () => {
     return signInWithPopup(auth, googleProvider);
@@ -49,6 +49,14 @@ const UserContext = ({ children }) => {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (currentUser) => {
+      
+      if(currentUser){
+        fetch(`http://localhost:5000/users?email=${currentUser.email}`)
+        .then((res) => res.json())
+        .then((data) => {    
+          setRole(data.role);
+        })
+      }
       setUser(currentUser);
       setLoading(false);
     });
@@ -69,7 +77,7 @@ const UserContext = ({ children }) => {
         isLoading,
         setLoading,
         role,
-        setRole
+        setRole,
       }}
     >
       {children}

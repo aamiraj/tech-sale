@@ -42,17 +42,17 @@ const LogIn = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    const userRole = form.role.value;
     //console.log(email, password, role);
 
     logIn(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        fetch(`http://localhost:5000/users?email=${email}&role=${userRole}`)
+        fetch(`http://localhost:5000/users?email=${email}`)
           .then((res) => res.json())
-          .then(() => {
+          .then((data) => {
+            //console.log(data)
             notify(user, null);
-            setRole(userRole);
+            setRole(data.role);
           })
           .catch((error) => {
             if (error) {
@@ -248,6 +248,15 @@ const LogIn = () => {
           required
         />
 
+        <label className="label cursor-pointer">
+          <span className="label-text">Admin</span>
+          <input
+            type="radio"
+            name="role"
+            className="radio checked:bg-green-500"
+            value="admin"
+          />
+        </label>
         <label className="label cursor-pointer">
           <span className="label-text">Buyer</span>
           <input
