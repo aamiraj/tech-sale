@@ -4,6 +4,7 @@ import AddaProduct from "../pages/AddaProduct";
 import AllBuyers from "../pages/AllBuyers";
 import AllSellers from "../pages/AllSellers";
 import AllUsers from "../pages/AllUsers";
+import Blog from "../pages/Blog";
 import Dashboard from "../pages/Dashboard";
 import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
@@ -66,7 +67,7 @@ export const router = createBrowserRouter([
           {
             path: "/dashboard/admin",
             element: <AllUsers></AllUsers>,
-            loader: () => fetch("http://localhost:5000/users"),
+            loader: () => fetch("https://tech-sale-server.vercel.app/users"),
           },
           {
             path: "/dashboard/admin/allsellers",
@@ -92,6 +93,10 @@ export const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:5000/categories/${params.id}`),
       },
+      {
+        path: "/blog",
+        element: <Blog></Blog>
+      }
     ],
   },
 ]);
