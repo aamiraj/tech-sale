@@ -13,7 +13,7 @@ import AdvertisedItems from "../comps/AdvertisedItems";
 import { useQuery } from "@tanstack/react-query";
 
 function Home() {
-  const [categories] = useFetch("http://localhost:5000/categories");
+  const [categories] = useFetch("https://tech-sale-server.vercel.app/categories");
   //console.log(categories);
   useTitle("Tech Sale || A store for used laptops");
 
@@ -21,7 +21,7 @@ function Home() {
     queryKey: ["advertisedLaptops"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/products?advertised=${true}`
+        `https://tech-sale-server.vercel.app/products?advertised=${true}`
       );
       const data = await res.json();
       //console.log(data);

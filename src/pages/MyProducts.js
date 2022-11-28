@@ -10,7 +10,7 @@ function MyProducts() {
     queryKey: ["userlaptops"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/products?email=${user.email}`
+        `https://tech-sale-server.vercel.app/products?email=${user.email}`
       );
       const data = await res.json();
       return data;
@@ -18,7 +18,7 @@ function MyProducts() {
   });
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/products?id=${id}`, {
+    fetch(`https://tech-sale-server.vercel.app/products?id=${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -31,7 +31,7 @@ function MyProducts() {
   };
 
   const handleAdvertise = (id) => {
-    fetch(`http://localhost:5000/products?id=${id}`, {
+    fetch(`https://tech-sale-server.vercel.app/products?id=${id}`, {
       method: "PATCH",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ title: "Corrected post" }),

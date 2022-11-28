@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/admin",
         element: <Dashboard></Dashboard>,
-        loader: () => fetch("http://localhost:5000/users"),
+        loader: () => fetch("https://tech-sale-server.vercel.app/users"),
         children: [
           {
             path: "/dashboard/admin",
@@ -91,7 +91,7 @@ export const router = createBrowserRouter([
           </Private>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/categories/${params.id}`),
+          fetch(`https://tech-sale-server.vercel.app/categories/${params.id}`),
       },
       {
         path: "/blog",

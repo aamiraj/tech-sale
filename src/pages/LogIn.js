@@ -48,7 +48,7 @@ const LogIn = () => {
     logIn(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        fetch(`http://localhost:5000/users?email=${email}`)
+        fetch(`https://tech-sale-server.vercel.app/users?email=${email}`)
           .then((res) => res.json())
           .then((data) => {
             //console.log(data)
@@ -110,7 +110,7 @@ const LogIn = () => {
           role: "buyer",
         };
 
-        fetch("http://localhost:5000/users", {
+        fetch("https://tech-sale-server.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -166,7 +166,7 @@ const LogIn = () => {
           role: "buyer",
         };
 
-        fetch("http://localhost:5000/users", {
+        fetch("https://tech-sale-server.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",

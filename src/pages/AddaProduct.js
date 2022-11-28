@@ -28,7 +28,7 @@ function AddaProduct() {
     };
 
     //console.log(addedProduct)
-    fetch("http://localhost:5000/products", {
+    fetch("https://tech-sale-server.vercel.app/products", {
       method: "POST",
       headers: {
         "content-type": "application/json",

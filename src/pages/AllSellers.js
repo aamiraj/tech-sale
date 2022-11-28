@@ -8,14 +8,14 @@ function AllSellers() {
   const { data: sellers = [], refetch } = useQuery({
     queryKey: ["sellers"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users?role=seller");
+      const res = await fetch("https://tech-sale-server.vercel.app/users?role=seller");
       const data = await res.json();
       return data;
     },
   });
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/users?id=${id}`, {
+    fetch(`https://tech-sale-server.vercel.app/users?id=${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

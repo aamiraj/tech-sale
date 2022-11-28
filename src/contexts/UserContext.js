@@ -52,7 +52,7 @@ const UserContext = ({ children }) => {
     const unsub = onAuthStateChanged(auth, (currentUser) => {
       
       if(currentUser){
-        fetch(`http://localhost:5000/users?email=${currentUser.email}`)
+        fetch(`https://tech-sale-server.vercel.app/users?email=${currentUser.email}`)
         .then((res) => res.json())
         .then((data) => {    
           setRole(data.role);
