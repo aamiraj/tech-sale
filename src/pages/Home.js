@@ -24,7 +24,7 @@ function Home() {
         `http://localhost:5000/products?advertised=${true}`
       );
       const data = await res.json();
-      console.log(data);
+      //console.log(data);
       return data;
     },
   });

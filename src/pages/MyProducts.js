@@ -30,10 +30,30 @@ function MyProducts() {
       });
   };
 
+  const handleAdvertise = (id) => {
+    fetch(`http://localhost:5000/products?id=${id}`, {
+      method: "PATCH",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ title: "Corrected post" }),
+    })
+      .then((response) => {
+        console.log(response.status);
+        return response.json();
+      })
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Item advertised successfully on Home page.");
+        }
+      })
+      .catch((error) => {
+        toast.error("Something wrong happened. Try again.");
+      });
+  };
+
   return (
     <div>
       <div className="overflow-x-auto w-full">
-      <Toaster position="top-center" reverseOrder={false}></Toaster>
+        <Toaster position="top-center" reverseOrder={false}></Toaster>
         <table className="table w-full">
           <thead>
             <tr>
@@ -59,7 +79,12 @@ function MyProducts() {
                   </button>
                 </td>
                 <td>
-                  <button className="btn btn-info btn-xs">Advertise</button>
+                  <button
+                    onClick={() => handleAdvertise(laptop._id)}
+                    className="btn btn-info btn-xs"
+                  >
+                    Advertise
+                  </button>
                 </td>
               </tr>
             ))}
