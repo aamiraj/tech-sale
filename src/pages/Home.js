@@ -9,11 +9,25 @@ import useFetch from "../hooks/useFetch";
 import Delivery from "../assets/delivery.jpg";
 import About from "../assets/aboutus.png";
 import useTitle from "../hooks/useTitle";
+import AdvertisedItems from "../comps/AdvertisedItems";
+import { useQuery } from "@tanstack/react-query";
 
 function Home() {
   const [categories] = useFetch("http://localhost:5000/categories");
   //console.log(categories);
-  useTitle("Tech Sale || A store for used laptops")
+  useTitle("Tech Sale || A store for used laptops");
+
+  const { data: advertisedLaptops = [] } = useQuery({
+    queryKey: ["advertisedLaptops"],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5000/products?advertised=${true}`
+      );
+      const data = await res.json();
+      console.log(data);
+      return data;
+    },
+  });
 
   return (
     <>
@@ -92,6 +106,15 @@ function Home() {
       </section>
       {/* carousel section ends */}
 
+      {/* advertise items here  */}
+      <section>
+        {advertisedLaptops.length && (
+          <AdvertisedItems
+            advertisedLaptops={advertisedLaptops}
+          ></AdvertisedItems>
+        )}
+      </section>
+
       {/* choose brands here  */}
       <section className="my-8 w-full md:w-3/4 mx-auto">
         <h1 className="my-8 mx-auto text-center text-4xl font-bold">
@@ -100,7 +123,7 @@ function Home() {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
           {categories.map((category, i) => (
             <Link
-            to={`/categories/${category.id}`}
+              to={`/categories/${category.id}`}
               key={i}
               className="flex justify-center items-center p-4 hover:shadow-md"
             >
