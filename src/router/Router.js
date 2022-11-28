@@ -1,6 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layouts/Main";
 import AddaProduct from "../pages/AddaProduct";
+import AllBuyers from "../pages/AllBuyers";
+import AllSellers from "../pages/AllSellers";
+import AllUsers from "../pages/AllUsers";
 import Dashboard from "../pages/Dashboard";
 import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
@@ -34,23 +37,49 @@ export const router = createBrowserRouter([
         element: <Register></Register>,
       },
       {
-        path: "/dashboard",
+        path: "/dashboard/seller",
         element: <Dashboard></Dashboard>,
         children: [
           {
-            path: "/dashboard",
+            path: "/dashboard/seller",
             element: <MyProducts></MyProducts>,
           },
           {
-            path: "/dashboard/myproducts",
+            path: "/dashboard/seller/myproducts",
             element: <MyProducts></MyProducts>,
           },
           {
-            path: "/dashboard/addaproduct",
+            path: "/dashboard/seller/addaproduct",
             element: <AddaProduct></AddaProduct>,
           },
           {
-            path: "/dashboard/mybuyers",
+            path: "/dashboard/seller/mybuyers",
+            element: <MyBuyers></MyBuyers>,
+          },
+        ],
+      },
+      {
+        path: "/dashboard/admin",
+        element: <Dashboard></Dashboard>,
+        loader: ()=>fetch("http://localhost:5000/users"),
+        children: [
+          {
+            path: "/dashboard/admin",
+            element: <AllUsers></AllUsers>,
+            loader: ()=>fetch("http://localhost:5000/users")
+          },
+          {
+            path: "/dashboard/admin/allsellers",
+            element: <AllSellers></AllSellers>,
+            loader: ()=>fetch(`http://localhost:5000/users?role=seller`)
+          },
+          {
+            path: "/dashboard/admin/allbuyers",
+            element: <AllBuyers></AllBuyers>,
+            loader: ()=>fetch(`http://localhost:5000/users?role=buyer`)
+          },
+          {
+            path: "/dashboard/admin/reporteditems",
             element: <MyBuyers></MyBuyers>,
           },
         ],

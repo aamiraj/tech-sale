@@ -52,8 +52,9 @@ function MyProducts() {
 
   return (
     <div>
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
       <div className="overflow-x-auto w-full">
-        <Toaster position="top-center" reverseOrder={false}></Toaster>
+        
         <table className="table w-full">
           <thead>
             <tr>

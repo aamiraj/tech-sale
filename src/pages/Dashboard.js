@@ -17,7 +17,7 @@ function Dashboard() {
               className={({ isActive }) =>
                 isActive ? "text-primary" : undefined
               }
-              to="/dashboard/myproducts"
+              to="/dashboard/seller/myproducts"
             >
               My products
             </NavLink>
@@ -27,7 +27,7 @@ function Dashboard() {
               className={({ isActive }) =>
                 isActive ? "text-primary" : undefined
               }
-              to="/dashboard/addaproduct"
+              to="/dashboard/seller/addaproduct"
             >
               Add a product
             </NavLink>
@@ -37,7 +37,7 @@ function Dashboard() {
               className={({ isActive }) =>
                 isActive ? "text-primary" : undefined
               }
-              to="/dashboard/mybuyers"
+              to="/dashboard/seller/mybuyers"
             >
               My buyers
             </NavLink>
@@ -49,12 +49,40 @@ function Dashboard() {
   }
   if (role === "admin") {
     return (
-      <div>
-        <ul>
-          <li>All sellers</li>
-          <li>All buyers</li>
-          <li>Reported items</li>
+      <div className="w-11/12 mx-auto my-4">
+        <ul className="flex justify-center items-center gap-2 text-warning my-8">
+          <li className="hover:text-primary">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-primary" : undefined
+              }
+              to="/dashboard/admin/allsellers"
+            >
+              All sellers
+            </NavLink>
+          </li>
+          <li className="hover:text-primary">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-primary" : undefined
+              }
+              to="/dashboard/admin/allbuyers"
+            >
+              All buyers
+            </NavLink>
+          </li>
+          <li className="hover:text-primary">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-primary" : undefined
+              }
+              to="/dashboard/admin/reporteditems"
+            >
+              Reported items
+            </NavLink>
+          </li>
         </ul>
+        <Outlet></Outlet>
       </div>
     );
   }

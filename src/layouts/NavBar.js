@@ -6,7 +6,7 @@ import { AuthContext } from "../contexts/UserContext";
 import { FaUserAlt } from "react-icons/fa";
 
 function NavBar() {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut, role } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogOut = () => {
@@ -46,7 +46,7 @@ function NavBar() {
                   className={({ isActive }) =>
                     isActive ? "text-amber-500" : undefined
                   }
-                  to="/dashboard"
+                  to={`/dashboard/${role}`}
                 >
                   Dashboard
                 </NavLink>
@@ -86,7 +86,7 @@ function NavBar() {
                 className={({ isActive }) =>
                   isActive ? "text-amber-500" : undefined
                 }
-                to="/dashboard"
+                to={`/dashboard/${role}`}
               >
                 Dashboard
               </NavLink>
