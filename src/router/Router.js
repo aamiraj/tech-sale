@@ -61,22 +61,20 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/admin",
         element: <Dashboard></Dashboard>,
-        loader: ()=>fetch("http://localhost:5000/users"),
+        loader: () => fetch("http://localhost:5000/users"),
         children: [
           {
             path: "/dashboard/admin",
             element: <AllUsers></AllUsers>,
-            loader: ()=>fetch("http://localhost:5000/users")
+            loader: () => fetch("http://localhost:5000/users"),
           },
           {
             path: "/dashboard/admin/allsellers",
             element: <AllSellers></AllSellers>,
-            loader: ()=>fetch(`http://localhost:5000/users?role=seller`)
           },
           {
             path: "/dashboard/admin/allbuyers",
             element: <AllBuyers></AllBuyers>,
-            loader: ()=>fetch(`http://localhost:5000/users?role=buyer`)
           },
           {
             path: "/dashboard/admin/reporteditems",

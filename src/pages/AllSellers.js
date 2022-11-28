@@ -1,11 +1,35 @@
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
 
 function AllSellers() {
-  const sellers = useLoaderData();
+  //const buyers = useLoaderData();
+
+  const { data: sellers = [], refetch } = useQuery({
+    queryKey: ["sellers"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5000/users?role=seller");
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  const handleDelete = (id) => {
+    fetch(`http://localhost:5000/users?id=${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          toast.success("User delete successful");
+          refetch();
+        }
+      });
+  };
   //console.log(allUsers);
   return (
     <div>
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
       <div className="overflow-x-auto w-full">
         <table className="table w-full">
           <thead>
@@ -14,15 +38,24 @@ function AllSellers() {
               <th>Email</th>
               <th>Role</th>
               <th>Status</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
-            {sellers.map((user, i) => (
+            {sellers?.map((user, i) => (
               <tr key={i}>
                 <td>{user?.name}</td>
                 <td>{user.email}</td>
                 <td>{user.role.toUpperCase()}</td>
                 <td>{user.verified ? "Verified" : "Not Verified"}</td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(user._id)}
+                    className="btn btn-error btn-xs"
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
