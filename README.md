@@ -1,3 +1,59 @@
+# Tech sale || Second-hand Laptop Selling Store
+
+Tech Sale is a platform on which you can buy and sell used
+laptops! We help people buy and sell laptops of different brands
+and also provide delivery services. With 6 brands our solutions
+are built to be safe, smart, and convenient for our customers. Every month, hundreds of people use Tech Sale to find and sell
+used laptops and more through classified ads. To sell new items or
+sell used items quickly, Tech Sale offers Ad Promotion features.
+Tech Sale has an extensive collection of new and used goods,
+making it easier for users to quickly buy new items or buy used
+items at their desired location. To buy online, users easily can
+reach their desired products through filtering options. Shipy is
+the e-commerce service of Tech Sale, serving necessary appliances
+with a 100% guarantee of safety and saving valuable time for
+buyers and sellers in online shopping. For businesses, Tech Sale
+has introduced the Membership service, which helps them expand
+their businesses online. Members will have their virtual shop with
+a Tech Sale URL with free promotions of their goods. With
+different membership categories, businesses can flourish as
+verified members and authorized dealers. With millions of unique
+monthly visitors, thousands of interested buyers, and thousands of
+active dealers on our platform, Tech Sale is one of the Largest
+Marketplace in Bangladesh.
+
+Live site: [Tech Sale](https://techsale-36ad6.web.app/)
+
+## Features
+
+- User freildly interface, easy to navigate and use.
+- App provides facility of using as a buyer or a seller.
+- Sell used brand-laptops at your claimed price as a seller.
+- A normal user (buyer) can book second-hand laptop, after confirming one can make payment.
+- Authorization is strong enough that anyone can not get data.
+- Google and Git Hub authentication is provided, so no time waste on registration as a user.
+
+## List of technologies (frameworks, libraries)
+
+- React
+- Tailwind CSS
+- DaisyUI
+- Firebase
+- React-router-dom
+- React-icons
+- React-loader-spinner
+- React-responsive-carousal
+- React-hot-toast
+- React-icons
+- React-query
+
+## Admin role
+
+Remember to select role as "Admin" while log in.
+
+admin email: abdul@gmail.com
+admin password: asdfgh
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
